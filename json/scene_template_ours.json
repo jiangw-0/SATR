@@ -1,0 +1,58 @@
+{
+  "name": "example_scene",
+  "pretrain": "IterComp",
+  "height": 1024,
+  "width": 1024,
+  "seed": 123,
+  "num_draft": 6,
+  "num_refine": 16,
+  "negative_prompt": "cartoon, illustration, CGI, lowres, blurry",
+  "density_scheduler": "inverse_proportional",
+  "mask_fusion": {
+    "mode": "sam_attn_blend",
+    "lambda_start": 0.72,
+    "lambda_end": 0.62,
+    "attn_power": 1.25,
+    "attn_floor": 0.18
+  },
+  "objects": [
+    {
+      "name": "background",
+      "prompt": "a greenhouse background with plants, realistic photo",
+      "bbox": [0.0, 1.0, 0.0, 1.0],
+      "alpha": 0.999,
+      "use_sam": false,
+      "use_attn": false
+    },
+    {
+      "name": "statue",
+      "prompt": "a marble statue bust, realistic photo <<behind:web>>",
+      "bbox": [0.28, 0.72, 0.22, 0.86],
+      "alpha": 0.95,
+      "use_sam": true,
+      "use_attn": true,
+      "keywords": ["statue"]
+    },
+    {
+      "name": "web",
+      "prompt": "a spider web in the foreground, thin strands, visible holes, realistic photo <<front_of:statue>>",
+      "bbox": [0.24, 0.76, 0.24, 0.80],
+      "alpha": 0.80,
+      "use_sam": true,
+      "use_attn": true,
+      "keywords": ["web"]
+    }
+  ],
+  "occlusion_pairs": [
+    {
+      "back": 1,
+      "front": 2,
+      "mode": "holey",
+      "min_occl": 0.08,
+      "max_occl": 0.22,
+      "back_density_min": 0.14,
+      "front_occupancy_min": 0.12,
+      "intersection_max": 0.18
+    }
+  ]
+}
